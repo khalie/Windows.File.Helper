@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -30,6 +31,7 @@ namespace Windows.File.Helper.ViewModel
       _addCommand = new RelayCommand(this.AddFolder, () => true);
       _removeCommand = new RelayCommand(this.RemoveFolder, this.CanRemoveFolder);
       _saveCommand = new RelayCommand(this.SaveFolder, () => true);
+      _deleteCommand = new RelayCommand(this.DeleteFiles, this.CanDeleteFiles);
 
       // Add Test Data if needed
       //UseTestData();
@@ -67,6 +69,15 @@ namespace Windows.File.Helper.ViewModel
     public ICommand SaveCommand
     {
       get { return _saveCommand; }
+    }
+
+    /// <summary>
+    /// Databinding: DeleteCommand. The DeleteCommand deletes all unwanted Files from the selected Folder.
+    /// </summary>
+    private readonly RelayCommand _deleteCommand;
+    public ICommand DeleteCommand
+    {
+      get { return _deleteCommand; }
     }
     #endregion
 
@@ -130,6 +141,43 @@ namespace Windows.File.Helper.ViewModel
       }
     }
 
+    /// <summary>
+    /// The CanDeleteFiles Method checks if a Folder is selected
+    /// </summary>
+    /// <returns>Returns <bool>true if Folder can be removed</returns>
+    private bool CanDeleteFiles()
+    {
+      return this.SelectedFolder != null;
+    }
+
+    /// <summary>
+    /// Delete defined Filetypes in the selected Folder
+    /// </summary>
+    private void DeleteFiles()
+    {
+      try
+      {
+        string[] txtList = Directory.GetFiles(SelectedFolder.Path, "*.txt");
+        string[] nfoList = Directory.GetFiles(SelectedFolder.Path, "*.nfo");
+        string[] urlList = Directory.GetFiles(SelectedFolder.Path, "*.url");
+
+        foreach (string f in txtList)
+          System.IO.File.Delete(f);
+
+        foreach (string f in nfoList)
+          System.IO.File.Delete(f);
+
+        foreach (string f in urlList)
+          System.IO.File.Delete(f);
+
+        MessageBox.Show("Dateien erfolgreich gelöscht.");
+
+      }
+      catch (DirectoryNotFoundException dirNotFound)
+      {
+        MessageBox.Show(dirNotFound.Message);
+      }
+    }
     
 
     
@@ -143,9 +191,7 @@ namespace Windows.File.Helper.ViewModel
     /// Property which saves the selected Folder
     /// </summary>
     private Folder _selectedFolder;
-    
-
-    public Folder SelectedFolder
+     public Folder SelectedFolder
     {
       get
       {

@@ -46,6 +46,9 @@
           <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding SaveCommand, Mode=OneWay}">
             <Image Source="Ressources\save.png" Stretch="None"/>
           </Button>
+          <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding DeleteCommand, Mode=OneWay}">
+            <Image Source="Ressources\delete.png" Stretch="None"/>
+          </Button>
         </StackPanel>
         <ListBox BorderBrush="Black" BorderThickness="1" Grid.IsSharedSizeScope="True" ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder, Mode=TwoWay}">
           <ListBox.ItemTemplate>

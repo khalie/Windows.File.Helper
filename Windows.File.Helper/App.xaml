@@ -43,7 +43,7 @@
         <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Path}"/>
 
         <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Text="Info:"/>
-        <TextBox Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3"/>
+        <TextBox Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding _path}"/>
       </Grid>
     </DataTemplate>
 
