@@ -34,6 +34,8 @@ namespace Windows.File.Helper.ViewModel
       // Add Test Data if needed
       //UseTestData();
 
+      // Selection on Startup
+      SelectedFolder = Folders.FirstOrDefault();
     }
 
     #endregion
@@ -68,7 +70,6 @@ namespace Windows.File.Helper.ViewModel
     }
     #endregion
 
-
     #region methods
     /// <summary>
     /// Adds Testdata, if needed.
@@ -100,7 +101,17 @@ namespace Windows.File.Helper.ViewModel
     /// </summary>
     private void RemoveFolder()
     {
+      // Save the Position of the Selected Folder
+      int nIndex = Folders.IndexOf(SelectedFolder);
+
       Folders.Remove(SelectedFolder);
+
+      // In Case we removed the Last Folder, select the next last Folder afterwards, else select the next Folder
+      if (Folders.Count() == nIndex)
+        SelectedFolder = this.Folders.LastOrDefault();
+      else
+        SelectedFolder = this.Folders.ElementAt(nIndex);
+
     }
 
     /// <summary>
