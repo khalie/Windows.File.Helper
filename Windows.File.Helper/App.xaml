@@ -42,8 +42,10 @@
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Pfad:" VerticalAlignment="Center"/>
         <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Path}"/>
 
-        <CheckBox Grid.Row="6" Grid.Column="0" IsChecked="{Binding Subfolders, Mode=TwoWay}">Unterordner mit einbeziehen</CheckBox>
-        
+        <CheckBox Grid.Row="6" Grid.Column="0" IsChecked="{Binding Subfolders, Mode=TwoWay}"></CheckBox>
+        <TextBlock Grid.Row="6" Grid.Column="2">Unterordner mit einbeziehen</TextBlock>
+        <CheckBox Grid.Row="8" Grid.Column="0" IsEnabled="{Binding Subfolders, Mode=OneWay}"  IsChecked="{Binding MoveFilesFromSubfolders, Mode=TwoWay}"></CheckBox>
+        <TextBlock Grid.Row="8" Grid.Column="2" IsEnabled="{Binding Subfolders, Mode=OneWay}">Dateien aus Unterordnern holen</TextBlock>
         <!--<TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Text="Info:"/>
         <TextBox Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding _path}"/>-->
       </Grid>

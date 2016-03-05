@@ -38,16 +38,19 @@
       <DockPanel Grid.Column="0">
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,5">
           <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding AddCommand, Mode=OneWay}">
-            <Image Source="Ressources\add.png" Stretch="None"/>
+            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE710;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
           </Button>
           <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding RemoveCommand, Mode=OneWay}">
-            <Image Source="Ressources\delete.png" Stretch="None"/>
+            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE738;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
           </Button>
           <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding SaveCommand, Mode=OneWay}">
-            <Image Source="Ressources\save.png" Stretch="None"/>
+            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74E;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
           </Button>
           <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding DeleteCommand, Mode=OneWay}">
-            <Image Source="Ressources\delete.png" Stretch="None"/>
+            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74D;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+          </Button>
+          <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding MoveCommand, Mode=OneWay}">
+            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8DE;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
           </Button>
         </StackPanel>
         <ListBox BorderBrush="Black" BorderThickness="1" Grid.IsSharedSizeScope="True" ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder, Mode=TwoWay}">
@@ -93,7 +96,7 @@
                     Width="6"
                     VerticalAlignment="Stretch"
                     Background="Transparent"/>
-
+      
       <ContentPresenter Grid.Column="2" Margin="10,0,0,0" ContentTemplate="{StaticResource FolderDetailView}" Content="{Binding SelectedFolder,Mode=OneWay}">
       </ContentPresenter>
     </Grid>

@@ -29,5 +29,10 @@ namespace Windows.File.Helper.Model
     /// Include Subfolders in this Path
     /// </summary>
     public bool Subfolders { get; set; }
+
+    /// <summary>
+    /// Moves Files from Subfolders to the Selected Folder
+    /// </summary>
+    public bool MoveFilesFromSubfolders { get; set; }
   }
 }

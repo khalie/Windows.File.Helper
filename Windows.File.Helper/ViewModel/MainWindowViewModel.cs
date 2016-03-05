@@ -16,7 +16,6 @@ namespace Windows.File.Helper.ViewModel
   public class MainWindowViewModel : INotifyPropertyChanged
   {
     /* What comes next?
-       - Checkbox that activates the functionality to delete in Subfolders
        - Edit the Search Criteria and save it to the Folder Object
        - Move instead of Delete
 
@@ -37,6 +36,7 @@ namespace Windows.File.Helper.ViewModel
       _removeCommand = new RelayCommand(this.RemoveFolder, this.CanRemoveFolder);
       _saveCommand = new RelayCommand(this.SaveFolder, () => true);
       _deleteCommand = new RelayCommand(this.DeleteFiles, this.CanDeleteFiles);
+      _moveCommand = new RelayCommand(this.MoveFiles, this.CanMoveFiles);
 
       // Add Test Data if needed
       //UseTestData();
@@ -83,6 +83,15 @@ namespace Windows.File.Helper.ViewModel
     public ICommand DeleteCommand
     {
       get { return _deleteCommand; }
+    }
+
+    /// <summary>
+    /// Databinding: MoveCommand. The MoveCommand moves all wanted Files from Subfolders to the SelectedFolder.
+    /// </summary>
+    private readonly RelayCommand _moveCommand;
+    public ICommand MoveCommand
+    {
+      get { return _moveCommand; }
     }
     #endregion
 
@@ -167,7 +176,7 @@ namespace Windows.File.Helper.ViewModel
 
         if (SelectedFolder.Subfolders)
           searchOption = SearchOption.AllDirectories;
-        
+
 
         string[] txtList = Directory.GetFiles(SelectedFolder.Path, "*.txt", searchOption);
         string[] nfoList = Directory.GetFiles(SelectedFolder.Path, "*.nfo", searchOption);
@@ -191,15 +200,63 @@ namespace Windows.File.Helper.ViewModel
           System.IO.File.Delete(f);
 
         MessageBox.Show("Dateien erfolgreich gelöscht.");
-
       }
       catch (DirectoryNotFoundException dirNotFound)
       {
         MessageBox.Show(dirNotFound.Message);
       }
     }
-    
 
+    /// <summary>
+    /// Returns the state of the checkbox "Move from Subfolders"
+    /// </summary>
+    /// <returns></returns>
+    private bool CanMoveFiles()
+    {
+      return SelectedFolder.MoveFilesFromSubfolders;
+    }
+
+    /// <summary>
+    /// Moves Files from Subfolders to the SelectedFolder
+    /// </summary>
+    private void MoveFiles()
+    {
+      if (SelectedFolder.MoveFilesFromSubfolders)
+      {
+        SearchOption searchOption = SearchOption.AllDirectories;
+
+        string[] mkvList = Directory.GetFiles(SelectedFolder.Path, "*.mkv", searchOption);
+        string[] mp4List = Directory.GetFiles(SelectedFolder.Path, "*.mp4", searchOption);
+
+        if (mkvList.Count() > 0)
+        {
+          // Checks if the File already exists in the SelectedFolder and deletes it before moving the File from the Subfolder
+          foreach (string f in mkvList)
+          {
+            if (System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
+            {
+              System.IO.File.Delete(SelectedFolder.Path + "\\" + Path.GetFileName(f));
+            }
+            System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
+
+          }
+        }
+        if (mp4List.Count() > 0)
+        {
+          // Checks if the File already exists in the SelectedFolder and deletes it before moving the File from the Subfolder
+          foreach (string f in mp4List)
+          {
+            if (System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
+            {
+              System.IO.File.Delete(SelectedFolder.Path + "\\" + Path.GetFileName(f));
+            }
+            System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
+
+          }
+        }
+
+      }
+    }
     
 
 
