@@ -15,7 +15,12 @@ namespace Windows.File.Helper.ViewModel
 {
   public class MainWindowViewModel : INotifyPropertyChanged
   {
-    
+    /* What comes next?
+       - Checkbox that activates the functionality to delete in Subfolders
+       - Edit the Search Criteria and save it to the Folder Object
+       - Move instead of Delete
+
+    */
     #region objects
     public ObservableCollection<Folder> Folders { get; private set; }
 
@@ -157,9 +162,18 @@ namespace Windows.File.Helper.ViewModel
     {
       try
       {
-        string[] txtList = Directory.GetFiles(SelectedFolder.Path, "*.txt");
-        string[] nfoList = Directory.GetFiles(SelectedFolder.Path, "*.nfo");
-        string[] urlList = Directory.GetFiles(SelectedFolder.Path, "*.url");
+        // If the Checkbox is checked, Subfolders are included in the Search
+        SearchOption searchOption = SearchOption.TopDirectoryOnly;
+
+        if (SelectedFolder.Subfolders)
+          searchOption = SearchOption.AllDirectories;
+        
+
+        string[] txtList = Directory.GetFiles(SelectedFolder.Path, "*.txt", searchOption);
+        string[] nfoList = Directory.GetFiles(SelectedFolder.Path, "*.nfo", searchOption);
+        string[] urlList = Directory.GetFiles(SelectedFolder.Path, "*.url", searchOption);
+        string[] dssList = Directory.GetFiles(SelectedFolder.Path, "*.DS_Store", searchOption);
+        string[] pdfList = Directory.GetFiles(SelectedFolder.Path, "*.pdf", searchOption);
 
         foreach (string f in txtList)
           System.IO.File.Delete(f);
@@ -168,6 +182,12 @@ namespace Windows.File.Helper.ViewModel
           System.IO.File.Delete(f);
 
         foreach (string f in urlList)
+          System.IO.File.Delete(f);
+
+        foreach (string f in dssList)
+          System.IO.File.Delete(f);
+
+        foreach (string f in pdfList)
           System.IO.File.Delete(f);
 
         MessageBox.Show("Dateien erfolgreich gelöscht.");

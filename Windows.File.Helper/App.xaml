@@ -42,8 +42,10 @@
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Pfad:" VerticalAlignment="Center"/>
         <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Path}"/>
 
-        <TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Text="Info:"/>
-        <TextBox Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding _path}"/>
+        <CheckBox Grid.Row="6" Grid.Column="0" IsChecked="{Binding Subfolders, Mode=TwoWay}">Unterordner mit einbeziehen</CheckBox>
+        
+        <!--<TextBlock Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Text="Info:"/>
+        <TextBox Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding _path}"/>-->
       </Grid>
     </DataTemplate>
 

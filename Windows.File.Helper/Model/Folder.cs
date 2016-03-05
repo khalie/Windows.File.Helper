@@ -24,5 +24,10 @@ namespace Windows.File.Helper.Model
     /// Contains the shown Path
     /// </summary>
     public string Path { get; set; }
+
+    /// <summary>
+    /// Include Subfolders in this Path
+    /// </summary>
+    public bool Subfolders { get; set; }
   }
 }
