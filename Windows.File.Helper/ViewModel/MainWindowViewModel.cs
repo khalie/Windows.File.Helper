@@ -243,15 +243,13 @@ namespace Windows.File.Helper.ViewModel
         }
         if (mp4List.Count() > 0)
         {
-          // Checks if the File already exists in the SelectedFolder and deletes it before moving the File from the Subfolder
+          // If the Filename already exists, do nothing
           foreach (string f in mp4List)
           {
-            if (System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
+            if (!System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
             {
-              System.IO.File.Delete(SelectedFolder.Path + "\\" + Path.GetFileName(f));
+              System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
             }
-            System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
-
           }
         }
 
