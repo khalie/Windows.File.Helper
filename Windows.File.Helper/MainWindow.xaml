@@ -26,9 +26,6 @@
     </Style>
   </Window.Resources>
   <DockPanel Margin="10">
-    <Border DockPanel.Dock="Top" Background="LightGray" BorderBrush="Black" BorderThickness="0,0,0,1">
-      <TextBlock Margin="0,10,0,10" Text="File Helper" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
-    </Border>
     <Grid Margin="0,10,0,0">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="1*" MinWidth="200"/>
@@ -37,19 +34,19 @@
       </Grid.ColumnDefinitions>
       <DockPanel Grid.Column="0">
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,5">
-          <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding AddCommand, Mode=OneWay}">
+          <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding AddCommand, Mode=OneWay}" ToolTip="Fügt einen neuen Eintrag hinzu.">
             <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE710;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Add Folder"></TextBlock>
           </Button>
-          <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding RemoveCommand, Mode=OneWay}">
+          <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding RemoveCommand, Mode=OneWay}" ToolTip="Entfernt den selektierten Eintrag.">
             <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE738;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Remove Folder"></TextBlock>
           </Button>
-          <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding SaveCommand, Mode=OneWay}">
+          <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding SaveCommand, Mode=OneWay}" ToolTip="Speichert die aktuellen Ordnereinstellungen.">
             <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74E;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Save Settings"></TextBlock>
           </Button>
-          <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding DeleteCommand, Mode=OneWay}">
+          <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding DeleteCommand, Mode=OneWay}" ToolTip="Datentypen der Blacklist werden gelöscht.">
             <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74D;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Delete unwanted Files"></TextBlock>
           </Button>
-          <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding MoveCommand, Mode=OneWay}">
+          <Button HorizontalAlignment="Left" Width="40" Height="40" Command="{Binding MoveCommand, Mode=OneWay}" ToolTip="Datentypen der Whitelist werden aus den Unterordnern in den obersten Ordner verschoben.">
             <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8DE;" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="Delete and Move unwanted Files"></TextBlock>
           </Button>
         </StackPanel>
