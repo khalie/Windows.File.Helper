@@ -150,8 +150,8 @@ namespace Windows.File.Helper.ViewModel
         MessageBox.Show("Speichern erfolgreich!");
       }
       catch
-      { 
-       MessageBox.Show("Speichern gescheitert!");
+      {
+        MessageBox.Show("Speichern gescheitert!");
       }
     }
 
@@ -177,7 +177,7 @@ namespace Windows.File.Helper.ViewModel
         if (SelectedFolder.Subfolders)
           searchOption = SearchOption.AllDirectories;
 
-
+        // ToDo move unwanted FileExtensions to own class 
         string[] txtList = Directory.GetFiles(SelectedFolder.Path, "*.txt", searchOption);
         string[] nfoList = Directory.GetFiles(SelectedFolder.Path, "*.nfo", searchOption);
         string[] urlList = Directory.GetFiles(SelectedFolder.Path, "*.url", searchOption);
@@ -225,37 +225,82 @@ namespace Windows.File.Helper.ViewModel
       {
         SearchOption searchOption = SearchOption.AllDirectories;
 
+        // ToDo Move wanted FileExtensions to own class
         string[] mkvList = Directory.GetFiles(SelectedFolder.Path, "*.mkv", searchOption);
         string[] mp4List = Directory.GetFiles(SelectedFolder.Path, "*.mp4", searchOption);
+        string[] aviList = Directory.GetFiles(SelectedFolder.Path, "*.avi", searchOption);
 
         if (mkvList.Count() > 0)
         {
           // Checks if the File already exists in the SelectedFolder and deletes it before moving the File from the Subfolder
           foreach (string f in mkvList)
           {
-            if (System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
+            // If the file already is in the top Folder, do nothing
+            if (f.Equals(System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f))))
             {
-              System.IO.File.Delete(SelectedFolder.Path + "\\" + Path.GetFileName(f));
+              if (System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
+              {
+                System.IO.File.Delete(SelectedFolder.Path + "\\" + Path.GetFileName(f));
+              }
+              System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
             }
-            System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
-
           }
         }
+
         if (mp4List.Count() > 0)
         {
           // If the Filename already exists, do nothing
           foreach (string f in mp4List)
           {
-            if (!System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
+            // If the file already is in the top Folder, do nothing
+            if (f.Equals(System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f))))
             {
+              if (!System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
+              {
+                System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
+              }
+            }
+          }
+        }
+
+        if (aviList.Count() > 0)
+        {
+          // Checks if the File already exists in the SelectedFolder and deletes it before moving the File from the Subfolder
+          foreach (string f in aviList)
+          {
+            // If the file already is in the top Folder, do nothing
+            if (f.Equals(System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f))))
+            {
+              if (System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
+              {
+                System.IO.File.Delete(SelectedFolder.Path + "\\" + Path.GetFileName(f));
+              }
               System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
             }
           }
         }
 
       }
+
+      // Delete empty Folders
+      deleteEmptyFolders(SelectedFolder.Path);
+
+
     }
-    
+
+    private void deleteEmptyFolders(string startpath)
+    {
+      foreach (String dir in Directory.GetDirectories(startpath))
+      {
+        deleteEmptyFolders(dir);
+        if (Directory.GetFiles(dir).Length == 0 && Directory.GetDirectories(dir).Length == 0)
+        {
+          Directory.Delete(dir, false);
+        }
+      }
+
+    }
+
 
 
     #endregion
@@ -266,7 +311,7 @@ namespace Windows.File.Helper.ViewModel
     /// Property which saves the selected Folder
     /// </summary>
     private Folder _selectedFolder;
-     public Folder SelectedFolder
+    public Folder SelectedFolder
     {
       get
       {

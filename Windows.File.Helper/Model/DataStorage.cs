@@ -25,4 +25,6 @@ namespace Windows.File.Helper.Model
       return (Folder[])serializer.Deserialize(reader, typeof(Folder[]));
     }
   }
+
 }
+
