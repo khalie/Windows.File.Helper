@@ -221,67 +221,36 @@ namespace Windows.File.Helper.ViewModel
       {
         SearchOption searchOption = SearchOption.AllDirectories;
 
-        // ToDo Move wanted FileExtensions to own class
-        string[] mkvList = Directory.GetFiles(SelectedFolder.Path, "*.mkv", searchOption);
-        string[] mp4List = Directory.GetFiles(SelectedFolder.Path, "*.mp4", searchOption);
-        string[] aviList = Directory.GetFiles(SelectedFolder.Path, "*.avi", searchOption);
 
-        if (mkvList.Count() > 0)
+        // Create Testdata
+        FileExtension mkv = new FileExtension("*.mkv");
+        FileExtension mp4 = new FileExtension("*.mp4");
+        FileExtension avi = new FileExtension("*.avi");
+        FileExtension[] Whitelist = { mkv, mp4, avi };
+
+        foreach (FileExtension ext in Whitelist)
         {
-          // Checks if the File already exists in the SelectedFolder and deletes it before moving the File from the Subfolder
-          foreach (string f in mkvList)
+          string[] move = Directory.GetFiles(SelectedFolder.Path, ext.extension, searchOption);
+
+          foreach (string f in move)
           {
-            // If the file already is in the top Folder, do nothing
-            //if (f.Equals(System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f))))
-            //{
+            // File isnt currently at the destination folder
+            if (!f.Equals(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
+            {
+              // If File does already exist in the destination folder, delete it
               if (System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
               {
                 System.IO.File.Delete(SelectedFolder.Path + "\\" + Path.GetFileName(f));
               }
               System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
-            //}
-          }
-        }
-
-        if (mp4List.Count() > 0)
-        {
-          // If the Filename already exists, do nothing
-          foreach (string f in mp4List)
-          {
-            // If the file already is in the top Folder, do nothing
-            //if (f.Equals(System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f))))
-            //{
-              if (!System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
-              {
-                System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
-              //}
             }
           }
         }
-
-        if (aviList.Count() > 0)
-        {
-          // Checks if the File already exists in the SelectedFolder and deletes it before moving the File from the Subfolder
-          foreach (string f in aviList)
-          {
-            // If the file already is in the top Folder, do nothing
-            //if (f.Equals(System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f))))
-            //{
-              if (System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
-              {
-                System.IO.File.Delete(SelectedFolder.Path + "\\" + Path.GetFileName(f));
-              }
-              System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
-            //}
-          }
-        }
+        
+        // Delete empty Folders
+        deleteEmptyFolders(SelectedFolder.Path);
 
       }
-
-      // Delete empty Folders
-      deleteEmptyFolders(SelectedFolder.Path);
-
-
     }
 
     private void deleteEmptyFolders(string startpath)
