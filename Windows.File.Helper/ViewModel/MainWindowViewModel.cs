@@ -199,6 +199,8 @@ namespace Windows.File.Helper.ViewModel
         foreach (string f in pdfList)
           System.IO.File.Delete(f);
 
+        deleteEmptyFolders(SelectedFolder.Path);
+
         MessageBox.Show("Dateien erfolgreich gelöscht.");
       }
       catch (DirectoryNotFoundException dirNotFound)
@@ -236,14 +238,14 @@ namespace Windows.File.Helper.ViewModel
           foreach (string f in mkvList)
           {
             // If the file already is in the top Folder, do nothing
-            if (f.Equals(System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f))))
-            {
+            //if (f.Equals(System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f))))
+            //{
               if (System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
               {
                 System.IO.File.Delete(SelectedFolder.Path + "\\" + Path.GetFileName(f));
               }
               System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
-            }
+            //}
           }
         }
 
@@ -253,12 +255,12 @@ namespace Windows.File.Helper.ViewModel
           foreach (string f in mp4List)
           {
             // If the file already is in the top Folder, do nothing
-            if (f.Equals(System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f))))
-            {
+            //if (f.Equals(System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f))))
+            //{
               if (!System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
               {
                 System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
-              }
+              //}
             }
           }
         }
@@ -269,14 +271,14 @@ namespace Windows.File.Helper.ViewModel
           foreach (string f in aviList)
           {
             // If the file already is in the top Folder, do nothing
-            if (f.Equals(System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f))))
-            {
+            //if (f.Equals(System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f))))
+            //{
               if (System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
               {
                 System.IO.File.Delete(SelectedFolder.Path + "\\" + Path.GetFileName(f));
               }
               System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
-            }
+            //}
           }
         }
 
