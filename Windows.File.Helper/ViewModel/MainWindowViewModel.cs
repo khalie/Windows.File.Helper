@@ -177,27 +177,21 @@ namespace Windows.File.Helper.ViewModel
         if (SelectedFolder.Subfolders)
           searchOption = SearchOption.AllDirectories;
 
-        // ToDo move unwanted FileExtensions to own class 
-        string[] txtList = Directory.GetFiles(SelectedFolder.Path, "*.txt", searchOption);
-        string[] nfoList = Directory.GetFiles(SelectedFolder.Path, "*.nfo", searchOption);
-        string[] urlList = Directory.GetFiles(SelectedFolder.Path, "*.url", searchOption);
-        string[] dssList = Directory.GetFiles(SelectedFolder.Path, "*.DS_Store", searchOption);
-        string[] pdfList = Directory.GetFiles(SelectedFolder.Path, "*.pdf", searchOption);
+        // Create Testdata
+        FileExtension txt = new FileExtension("*.txt");
+        FileExtension nfo = new FileExtension("*.nfo");
+        FileExtension url = new FileExtension("*.url");
+        FileExtension DS_Store = new FileExtension("*.DS_Store");
+        FileExtension pdf = new FileExtension("*.pdf");
+        FileExtension[] Blacklist = { txt, nfo, url, DS_Store, pdf };
+        
+        foreach (FileExtension ext in Blacklist)
+        {
+          string[] deleteItems = Directory.GetFiles(SelectedFolder.Path, ext.extension, searchOption);
 
-        foreach (string f in txtList)
-          System.IO.File.Delete(f);
-
-        foreach (string f in nfoList)
-          System.IO.File.Delete(f);
-
-        foreach (string f in urlList)
-          System.IO.File.Delete(f);
-
-        foreach (string f in dssList)
-          System.IO.File.Delete(f);
-
-        foreach (string f in pdfList)
-          System.IO.File.Delete(f);
+          foreach (string f in deleteItems)
+            System.IO.File.Delete(f);
+        }
 
         deleteEmptyFolders(SelectedFolder.Path);
 
