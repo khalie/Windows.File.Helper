@@ -37,10 +37,7 @@ namespace Windows.File.Helper.ViewModel
       _saveCommand = new RelayCommand(this.SaveFolder, () => true);
       _deleteCommand = new RelayCommand(this.DeleteFiles, this.CanDeleteFiles);
       _moveCommand = new RelayCommand(this.MoveFiles, this.CanMoveFiles);
-
-      // Add Test Data if needed
-      //UseTestData();
-
+      
       // Selection on Startup
       SelectedFolder = Folders.FirstOrDefault();
     }
@@ -226,7 +223,9 @@ namespace Windows.File.Helper.ViewModel
         FileExtension mkv = new FileExtension("*.mkv");
         FileExtension mp4 = new FileExtension("*.mp4");
         FileExtension avi = new FileExtension("*.avi");
-        FileExtension[] Whitelist = { mkv, mp4, avi };
+        FileExtension flv = new FileExtension("*.flv");
+        FileExtension wmv = new FileExtension("*.wmv");
+        FileExtension[] Whitelist = { mkv, mp4, avi, flv, wmv };
 
         foreach (FileExtension ext in Whitelist)
         {
