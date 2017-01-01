@@ -208,7 +208,15 @@ namespace Windows.File.Helper.ViewModel
     /// <returns></returns>
     private bool CanMoveFiles()
     {
-      return SelectedFolder.MoveFilesFromSubfolders;
+      try
+      {
+        return SelectedFolder.MoveFilesFromSubfolders;
+      }
+      catch (NullReferenceException ex)
+      {
+        return false;
+      }
+      
     }
 
     /// <summary>
