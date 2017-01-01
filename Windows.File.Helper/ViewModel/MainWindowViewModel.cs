@@ -94,14 +94,7 @@ namespace Windows.File.Helper.ViewModel
     #endregion
 
     #region methods
-    /// <summary>
-    /// Adds Testdata, if needed.
-    /// </summary>
-    private void UseTestData()
-    {
-      Folders.Add(new Folder { Name = "Downloads", Path = "G:\\Test" });
-    }
-
+    
     /// <summary>
     /// The Add Method adds a new Folder Object to the Observable Collection Folders
     /// </summary>
@@ -145,11 +138,12 @@ namespace Windows.File.Helper.ViewModel
       try
       {
         DataStorage.SaveInFile(Folders.ToArray());
-        MessageBox.Show("Speichern erfolgreich!");
+        //MessageBox.Show("Speichern erfolgreich!");
       }
-      catch
+      catch (Exception ex)
       {
-        MessageBox.Show("Speichern gescheitert!");
+        throw ex;
+        //MessageBox.Show("Speichern gescheitert!");
       }
     }
 
@@ -193,7 +187,7 @@ namespace Windows.File.Helper.ViewModel
 
         deleteEmptyFolders(SelectedFolder.Path);
 
-        MessageBox.Show("Dateien erfolgreich gelöscht.");
+        //MessageBox.Show("Dateien erfolgreich gelöscht.");
         
       }
       catch (DirectoryNotFoundException dirNotFound)

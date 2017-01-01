@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Windows.File.Helper")]
 [assembly: AssemblyDescription("Helper that executes different Tasks for selected Folders")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("khalie")]
+[assembly: AssemblyCompany("Peter Henniger")]
 [assembly: AssemblyProduct("Windows.File.Helper")]
 [assembly: AssemblyCopyright("Copyright ©  2016 - CC0 1.0 Universal")]
 [assembly: AssemblyTrademark("https://github.com/khalie/Windows.File.Helper.git")]
@@ -51,7 +51,7 @@ using System.Windows;
 // Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.0.1")]
-[assembly: AssemblyFileVersion("0.1.0.1")]
+[assembly: AssemblyVersion("0.1.0.2")]
+[assembly: AssemblyFileVersion("0.1.0.2")]
 [assembly: NeutralResourcesLanguage("")]
 
