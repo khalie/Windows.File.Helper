@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -37,7 +38,7 @@ namespace Windows.File.Helper.ViewModel
       _saveCommand = new RelayCommand(this.SaveFolder, () => true);
       _deleteCommand = new RelayCommand(this.DeleteFiles, this.CanDeleteFiles);
       _moveCommand = new RelayCommand(this.MoveFiles, this.CanMoveFiles);
-      
+
       // Selection on Startup
       SelectedFolder = Folders.FirstOrDefault();
     }
@@ -181,7 +182,7 @@ namespace Windows.File.Helper.ViewModel
         FileExtension DS_Store = new FileExtension("*.DS_Store");
         FileExtension pdf = new FileExtension("*.pdf");
         FileExtension[] Blacklist = { txt, nfo, url, DS_Store, pdf };
-        
+
         foreach (FileExtension ext in Blacklist)
         {
           string[] deleteItems = Directory.GetFiles(SelectedFolder.Path, ext.extension, searchOption);
@@ -193,6 +194,7 @@ namespace Windows.File.Helper.ViewModel
         deleteEmptyFolders(SelectedFolder.Path);
 
         MessageBox.Show("Dateien erfolgreich gelöscht.");
+        
       }
       catch (DirectoryNotFoundException dirNotFound)
       {
@@ -245,13 +247,17 @@ namespace Windows.File.Helper.ViewModel
             }
           }
         }
-        
+
         // Delete empty Folders
         deleteEmptyFolders(SelectedFolder.Path);
 
       }
     }
 
+    /// <summary>
+    /// Deletes Folders that are either empty, or only contain a single preview (.jpg) Image
+    /// </summary>
+    /// <param name="startpath"></param>
     private void deleteEmptyFolders(string startpath)
     {
       foreach (String dir in Directory.GetDirectories(startpath))
@@ -261,11 +267,34 @@ namespace Windows.File.Helper.ViewModel
         {
           Directory.Delete(dir, false);
         }
+        // Delete Folders that only contain one (preview) image
+        else if (Directory.GetFiles(dir).Length == 1 && Directory.GetDirectories(dir).Length == 0)
+        {
+          if (Directory.GetFiles(dir).First().EndsWith(".jpg"))
+            Directory.Delete(dir, true);
+        }
       }
 
     }
+    /*
+    private void renameFiles()
+    {
+      string args = " -rename " + SelectedFolder.Path + " --db TheTVDB --lang de -non-strict";
+      try
+      {
+        //Process process = new Process();
+        //process.StartInfo.FileName = @"C:\Users\Peter Henniger\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\FileBot\filebot.exe";
+        //process.StartInfo.Arguments = args;
+        //process.Start();
+        Console.WriteLine("filebot" + args);
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
 
-
+    }
+    */
 
     #endregion
 
