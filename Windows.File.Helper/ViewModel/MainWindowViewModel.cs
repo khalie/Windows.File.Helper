@@ -140,9 +140,9 @@ namespace Windows.File.Helper.ViewModel
         DataStorage.SaveInFile(Folders.ToArray());
         //MessageBox.Show("Speichern erfolgreich!");
       }
-      catch (Exception ex)
+      catch
       {
-        throw ex;
+        throw;
         //MessageBox.Show("Speichern gescheitert!");
       }
     }
@@ -185,7 +185,7 @@ namespace Windows.File.Helper.ViewModel
             System.IO.File.Delete(f);
         }
 
-        deleteEmptyFolders(SelectedFolder.Path);
+        DeleteEmptyFolders(SelectedFolder.Path);
 
         //MessageBox.Show("Dateien erfolgreich gelöscht.");
         
@@ -206,7 +206,7 @@ namespace Windows.File.Helper.ViewModel
       {
         return SelectedFolder.MoveFilesFromSubfolders;
       }
-      catch (NullReferenceException ex)
+      catch (NullReferenceException )
       {
         return false;
       }
@@ -251,7 +251,7 @@ namespace Windows.File.Helper.ViewModel
         }
 
         // Delete empty Folders
-        deleteEmptyFolders(SelectedFolder.Path);
+        DeleteEmptyFolders(SelectedFolder.Path);
 
       }
     }
@@ -260,11 +260,11 @@ namespace Windows.File.Helper.ViewModel
     /// Deletes Folders that are either empty, or only contain a single preview (.jpg) Image
     /// </summary>
     /// <param name="startpath"></param>
-    private void deleteEmptyFolders(string startpath)
+    private void DeleteEmptyFolders(string startpath)
     {
       foreach (String dir in Directory.GetDirectories(startpath))
       {
-        deleteEmptyFolders(dir);
+        DeleteEmptyFolders(dir);
         if (Directory.GetFiles(dir).Length == 0 && Directory.GetDirectories(dir).Length == 0)
         {
           Directory.Delete(dir, false);
@@ -324,10 +324,7 @@ namespace Windows.File.Helper.ViewModel
     public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
-      if (PropertyChanged != null)
-      {
-        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-      }
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
     #endregion
   }
