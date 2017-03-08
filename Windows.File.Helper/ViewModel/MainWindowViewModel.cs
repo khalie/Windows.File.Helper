@@ -229,7 +229,8 @@ namespace Windows.File.Helper.ViewModel
         FileExtension avi = new FileExtension("*.avi");
         FileExtension flv = new FileExtension("*.flv");
         FileExtension wmv = new FileExtension("*.wmv");
-        FileExtension[] Whitelist = { mkv, mp4, avi, flv, wmv };
+        FileExtension mpg = new FileExtension("*.mpg");
+        FileExtension[] Whitelist = { mkv, mp4, avi, flv, wmv, mpg };
 
         foreach (FileExtension ext in Whitelist)
         {
@@ -237,15 +238,16 @@ namespace Windows.File.Helper.ViewModel
 
           foreach (string f in move)
           {
+            string path = SelectedFolder.Path + "\\" + Path.GetFileName(f);
             // File isnt currently at the destination folder
-            if (!f.Equals(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
+            if (!f.Equals(path))
             {
               // If File does already exist in the destination folder, delete it
-              if (System.IO.File.Exists(SelectedFolder.Path + "\\" + Path.GetFileName(f)))
+              if (System.IO.File.Exists(path))
               {
-                System.IO.File.Delete(SelectedFolder.Path + "\\" + Path.GetFileName(f));
+                System.IO.File.Delete(path);
               }
-              System.IO.File.Move(f, SelectedFolder.Path + "\\" + Path.GetFileName(f));
+              System.IO.File.Move(f, path);
             }
           }
         }
