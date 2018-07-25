@@ -1,1 +1,1 @@
-[{"Name":"16","PathForCommand":null,"Path":"F:\\Downloads\\23","Subfolders":true,"MoveFilesFromSubfolders":true},{"Name":"New","PathForCommand":null,"Path":null,"Subfolders":false,"MoveFilesFromSubfolders":false}]
+[{"Name":"23","PathForCommand":null,"Path":"E:\\Neuer Ordner","Subfolders":true,"MoveFilesFromSubfolders":true},{"Name":"New","PathForCommand":null,"Path":null,"Subfolders":false,"MoveFilesFromSubfolders":false}]

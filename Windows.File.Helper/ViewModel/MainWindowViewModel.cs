@@ -38,6 +38,7 @@ namespace Windows.File.Helper.ViewModel
       _saveCommand = new RelayCommand(this.SaveFolder, () => true);
       _deleteCommand = new RelayCommand(this.DeleteFiles, this.CanDeleteFiles);
       _moveCommand = new RelayCommand(this.MoveFiles, this.CanMoveFiles);
+      _moveAllCommand = new RelayCommand(this.MoveAllFiles, this.CanMoveFiles);
 
       // Selection on Startup
       SelectedFolder = Folders.FirstOrDefault();
@@ -91,10 +92,19 @@ namespace Windows.File.Helper.ViewModel
     {
       get { return _moveCommand; }
     }
+
+    /// <summary>
+    /// Databinding: MoveAllCommand. The MoveCommand moves all Files from Subfolders to the SelectedFolder.
+    /// </summary>
+    private readonly RelayCommand _moveAllCommand;
+    public ICommand MoveAllCommand
+    {
+      get { return _moveAllCommand; }
+    }
     #endregion
 
     #region methods
-    
+
     /// <summary>
     /// The Add Method adds a new Folder Object to the Observable Collection Folders
     /// </summary>
@@ -280,6 +290,39 @@ namespace Windows.File.Helper.ViewModel
       }
 
     }
+
+    private void MoveAllFiles()
+    {
+      DirectoryInfo dir = new DirectoryInfo(SelectedFolder.Path);
+      
+      foreach(var folder in dir.GetDirectories())
+      {
+        MoveAllFiles(folder);
+      }
+      
+    }
+
+    private void MoveAllFiles(DirectoryInfo dir)
+    {
+
+      foreach (var folder in dir.GetDirectories())
+      {
+        MoveAllFiles(folder);
+      }
+      foreach(var file in dir.GetFiles())
+      {
+
+        try
+        {
+          file.MoveTo(SelectedFolder.Path + "\\" + file.Name);
+        }
+        catch (Exception)
+        {
+          // a file with the same name already exists - do nothing
+        }
+      }
+    }
+
     /*
     private void renameFiles()
     {
